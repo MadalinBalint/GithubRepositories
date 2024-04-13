@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Github Repositories</string>
+
+    <string name="avatar_description">User avatar</string>
+    <string name="person_description">Person icon</string>
+    <string name="topic_description">Topic icon</string>
+    <string name="link_description">Link icon</string>
+
+    <string name="description">Description:</string>
+    <string name="repository_url">Repository URL:</string>
+    <string name="programming_language">Programming language:</string>
+    <string name="license_type">License type:</string>
+    <string name="topics">Topics:</string>
 </resources>

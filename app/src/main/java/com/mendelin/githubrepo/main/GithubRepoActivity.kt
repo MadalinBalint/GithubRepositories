@@ -1,4 +1,4 @@
-package com.mendelin.githubrepo
+package com.mendelin.githubrepo.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.mendelin.githubrepo.ui.theme.GithubRepositoriesTheme
 
-class MainActivity : ComponentActivity() {
+class GithubRepoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
