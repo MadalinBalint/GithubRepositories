@@ -22,7 +22,7 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "API_KEY", "\"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\"")
+        buildConfigField("String", "API_KEY", "\"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\"")
     }
 
     buildTypes {
