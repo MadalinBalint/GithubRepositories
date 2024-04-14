@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.mendelin.githubrepo.data.fake.FakeRepositoryModel
 import com.mendelin.githubrepo.data.model.RepositoriesResponse
-import com.mendelin.githubrepo.data.model.UnprocessableEntityResponse
+import com.mendelin.githubrepo.data.model.ErrorResponse
 import com.mendelin.githubrepo.data.model.toRepository
 import com.mendelin.githubrepo.data.remote.GithubApi
 import com.mendelin.githubrepo.data.repository.GithubRepositoryImpl
@@ -86,7 +86,7 @@ class RepositoryTest {
     fun searchRepositories_called_and_returns_422_contains_error() =
         runTest {
             /* Given */
-            val expectedResponse = UnprocessableEntityResponse(
+            val expectedResponse = ErrorResponse(
                 message = "Only the first 1000 search results are available",
                 documentation_url = "https://docs.github.com/v3/search/",
             )
@@ -107,7 +107,7 @@ class RepositoryTest {
             val errorBody = actualResponse.errorBody()?.string()
             assertThat(errorBody).isNotEmpty()
 
-            val body = gson.fromJson(errorBody, UnprocessableEntityResponse::class.java)
+            val body = gson.fromJson(errorBody, ErrorResponse::class.java)
             assertThat(body).isNotNull()
             assertThat(body).isEqualTo(expectedResponse)
         }

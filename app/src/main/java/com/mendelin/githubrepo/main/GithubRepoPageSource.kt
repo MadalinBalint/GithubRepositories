@@ -42,21 +42,6 @@ class GithubRepoPageSource @Inject constructor(
 
             if (response != null) {
                 when (response) {
-                    is Resource.EndOfList -> {
-                        if (showEolAsError) {
-                            val message = response.message!!
-                            callback.onPageError(message)
-                            LoadResult.Error(Exception(message))
-                        } else {
-                            callback.onPageSuccess(currentPage)
-                            LoadResult.Page(
-                                data = listOf(getEndOfListRepository(response.message!!)),
-                                prevKey = if (currentPage <= 1) null else currentPage.minus(1),
-                                nextKey = null
-                            )
-                        }
-                    }
-
                     is Resource.Success -> {
                         if (response.data != null) {
                             val totalItems = response.data.total_count

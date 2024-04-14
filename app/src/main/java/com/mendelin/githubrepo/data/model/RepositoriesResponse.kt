@@ -10,7 +10,7 @@ data class RepositoriesResponse(
 )
 
 @Keep
-data class UnprocessableEntityResponse(
+data class ErrorResponse(
     val message: String,
     val documentation_url: String,
 )

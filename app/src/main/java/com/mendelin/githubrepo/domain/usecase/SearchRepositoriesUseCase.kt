@@ -1,7 +1,7 @@
 package com.mendelin.githubrepo.domain.usecase
 
 import com.google.gson.Gson
-import com.mendelin.githubrepo.data.model.UnprocessableEntityResponse
+import com.mendelin.githubrepo.data.model.ErrorResponse
 import com.mendelin.githubrepo.data.repository.GithubRepository
 import com.mendelin.githubrepo.domain.Resource
 import kotlinx.coroutines.flow.flow
@@ -25,11 +25,11 @@ class SearchRepositoriesUseCase @Inject constructor(
                     }
                 }
 
-                apiResponse.code() in listOf(403, 422) -> {
+                apiResponse.code() in 400..499 -> {
                     val json = apiResponse.errorBody()?.string()
-                    val body = gson.fromJson(json, UnprocessableEntityResponse::class.java)
+                    val body = gson.fromJson(json, ErrorResponse::class.java)
                     if (body != null) {
-                        emit(Resource.EndOfList(message = "${body.message}\n${body.documentation_url}"))
+                        emit(Resource.Error(message = "${body.message}\n${body.documentation_url}"))
                     } else {
                         emit(Resource.Error(message = "Null body exception on ${apiResponse.code()}"))
                     }
