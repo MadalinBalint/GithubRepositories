@@ -19,7 +19,7 @@ Coroutine, Flow, Paging 3 (pagination/endless scroll), Coil (image load), Timber
 
 **Testing**: unit tests, fakes, JUnit4, Mockk
 
-**Warning**: *Before running the app, replace the <github_api_key> string inside build.gradle.kts, with a real access token generated from your Github account, otherwise you'll receive a '**Bad credentials**' error.*
+**Warning**: *Before running the app, replace the <github_api_key> string inside build.gradle.kts, with a real access token generated from your GitHub account, otherwise you'll receive a '**Bad credentials**' error.*
 
 # Pixel 7 pro screenshots
 ![Portrait](screenshots/Phone_portrait.png) ![Landscape](screenshots/Phone_landscape.png)
