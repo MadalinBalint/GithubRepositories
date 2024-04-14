@@ -22,7 +22,8 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "API_KEY", "\"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\"")
+        /* Replace <github_api_key> with a real access token generated from your Github account */
+        buildConfigField("String", "API_KEY", "\"<github_api_key>\"")
     }
 
     buildTypes {
