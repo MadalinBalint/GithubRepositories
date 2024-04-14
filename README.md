@@ -13,7 +13,7 @@ Kotlin, Compose, MVVM architecture, ViewModel
 
 Coroutine, Flow, Paging 3 (pagination/endless scroll), Coil (image load), Timber (logging), Gson (JSON serialize/deserialize)
 
-**Dependecy injection**: Hilt
+**Dependency injection**: Hilt
 
 **Networking**: Retrofit (support for empty body response, custom error body response, automatically retry the call for 3 times if you receive a server error (5xx))
 
