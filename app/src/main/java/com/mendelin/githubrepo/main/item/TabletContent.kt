@@ -49,12 +49,8 @@ fun ListTabletContent(
         ) {
             items(list.itemCount, key = list.itemKey { it.id }) { index ->
                 val item = list[index]!!
-                if (item.endOfListMessage != null) {
-                    EndOfList(message = item.endOfListMessage)
-                } else {
-                    OwnerAvatarImage(imageUrl = item.ownerAvatar, size = cellSize) {
-                        onClick(list[index]!!)
-                    }
+                OwnerAvatarImage(imageUrl = item.ownerAvatar, size = cellSize) {
+                    onClick(list[index]!!)
                 }
             }
         }

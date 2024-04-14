@@ -19,6 +19,4 @@ data class Repository(
     val licenseType: String?,
     val licenseUrl: String?,
     val topics: String?,
-
-    val endOfListMessage: String? = null
-): Parcelable
+) : Parcelable

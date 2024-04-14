@@ -36,11 +36,6 @@ fun ItemPhonePortraitContent(item: Repository) {
             .padding(bottom = 16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
     ) {
-        if (item.endOfListMessage != null) {
-            EndOfList(message = item.endOfListMessage)
-            return@ElevatedCard
-        }
-
         Row(verticalAlignment = Alignment.CenterVertically) {
             OwnerAvatarImage(imageUrl = item.ownerAvatar, size = 128.dp)
             Spacer(modifier = Modifier.width(16.dp))
@@ -98,11 +93,6 @@ fun ItemPhoneLandscapeContent(item: Repository) {
             .padding(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
     ) {
-        if (item.endOfListMessage != null) {
-            EndOfList(message = item.endOfListMessage)
-            return@ElevatedCard
-        }
-
         Row(verticalAlignment = Alignment.CenterVertically) {
             OwnerAvatarImage(imageUrl = item.ownerAvatar, size = 96.dp)
             Spacer(modifier = Modifier.width(16.dp))
