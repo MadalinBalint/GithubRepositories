@@ -12,6 +12,7 @@ class SearchRepositoriesUseCase @Inject constructor(
     private val repository: GithubRepository,
     private val gson: Gson,
 ) {
+    // TODO - add support for an offline mode
     operator fun invoke(search: String, pageItems: Int, page: Int) = flow {
         try {
             val apiResponse = repository.searchRepositories(search, pageItems, page)
