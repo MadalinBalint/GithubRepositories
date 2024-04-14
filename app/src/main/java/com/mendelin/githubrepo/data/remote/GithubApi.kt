@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface GithubApi {
-
+    // TODO - add support for sort & order parameters
     @GET("search/repositories")
     suspend fun searchRepositories(
         @Query("q") search: String,

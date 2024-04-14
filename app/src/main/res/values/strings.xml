@@ -5,7 +5,11 @@
     <string name="person_description">Person icon</string>
     <string name="topic_description">Topic icon</string>
     <string name="link_description">Link icon</string>
+    <string name="search_description">Search icon</string>
+    <string name="close_description">Close icon</string>
+    <string name="history_description">History icon</string>
 
+    <string name="search_repositories">Search repositories</string>
     <string name="description">Description:</string>
     <string name="repository_url">Repository URL:</string>
     <string name="programming_language">Programming language:</string>

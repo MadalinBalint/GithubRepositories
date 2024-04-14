@@ -38,7 +38,6 @@ import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.mendelin.githubrepo.R
-import com.mendelin.githubrepo.domain.Resource
 import com.mendelin.githubrepo.ui.theme.GithubRepoTheme
 
 
@@ -206,12 +205,16 @@ private fun ClickableUrlContent(url: String, isTablet: Boolean) {
         style = if (isTablet) MaterialTheme.typography.bodyLarge else MaterialTheme.typography.bodyMedium
     )
 }
+
 /** Previews of the screen items */
 @Preview(showBackground = true)
 @Composable
 fun OwnerAvatarImagePreview() {
     GithubRepoTheme {
-        OwnerAvatarImage(imageUrl = "https://avatars.githubusercontent.com/u/7304399?v=4", size = 128.dp, onClick = {})
+        OwnerAvatarImage(
+            imageUrl = "https://avatars.githubusercontent.com/u/7304399?v=4",
+            size = 128.dp,
+            onClick = {})
     }
 }
 

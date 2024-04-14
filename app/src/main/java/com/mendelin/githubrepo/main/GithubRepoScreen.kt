@@ -31,7 +31,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -39,11 +38,13 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.mendelin.githubrepo.R
 import com.mendelin.githubrepo.domain.model.Repository
 import com.mendelin.githubrepo.main.item.ListPhoneLandscapeContent
 import com.mendelin.githubrepo.main.item.ListPhonePortraitContent
@@ -55,7 +56,6 @@ fun GithubRepoScreen(
     viewModel: GithubRepoViewModel = viewModel(),
     isTablet: Boolean
 ) {
-    val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     val uiState by viewModel.uiState.collectAsState()
     val repositories = viewModel.repositoriesState.collectAsLazyPagingItems()
@@ -82,6 +82,7 @@ fun GithubRepoScreen(
             SnackbarHost(hostState = snackbarHostState)
         },
         topBar = {
+            // TODO - add UI for sorting & ordering the results from the API
             SearchBar(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -93,6 +94,7 @@ fun GithubRepoScreen(
                 onSearch = {
                     active = false
                     if (text.isNotBlank() && !searchItems.contains(text)) {
+                        // TODO - save search queries in a local Room database, for persistence
                         searchItems.add(text)
                     }
 
@@ -100,15 +102,18 @@ fun GithubRepoScreen(
                 },
                 active = active,
                 onActiveChange = { active = it },
-                placeholder = { Text(text = "Search repositories") },
+                placeholder = { Text(text = stringResource(R.string.search_repositories)) },
                 leadingIcon = {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = "Search icon")
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = stringResource(R.string.search_description)
+                    )
                 },
                 trailingIcon = {
                     if (active) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = "Close icon",
+                            contentDescription = stringResource(R.string.close_description),
                             modifier = Modifier.clickable {
                                 if (text.isNotEmpty()) {
                                     text = ""
@@ -125,10 +130,14 @@ fun GithubRepoScreen(
                     Row(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                         Icon(
                             imageVector = Icons.Default.History,
-                            contentDescription = "History icon"
+                            contentDescription = stringResource(R.string.history_description)
                         )
                         Spacer(modifier = Modifier.width(16.dp))
-                        Text(text = it)
+                        Text(text = it, modifier = Modifier.clickable {
+                            text = it
+                            active = false
+                            viewModel.fetchRepositories(text)
+                        })
                     }
                 }
             }
