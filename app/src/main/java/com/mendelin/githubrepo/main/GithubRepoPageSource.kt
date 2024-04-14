@@ -15,14 +15,13 @@ import javax.inject.Inject
 
 interface PageStatusCallback {
     fun onPageLoading()
-    fun onPageSuccess(page: Int)
+    fun onPageSuccess(page: Int, items: Int)
     fun onPageError(message: String)
 }
 
 class GithubRepoPageSource @Inject constructor(
     private val useCase: SearchRepositoriesUseCase,
     private val query: String,
-    private val showEolAsError: Boolean,
     private val callback: PageStatusCallback
 ) : PagingSource<Int, Repository>() {
     override fun getRefreshKey(state: PagingState<Int, Repository>): Int? {
@@ -48,9 +47,11 @@ class GithubRepoPageSource @Inject constructor(
                             var maxPages = totalItems / ITEMS_PER_PAGE
                             if (totalItems % ITEMS_PER_PAGE > 0) maxPages += 1
 
-                            callback.onPageSuccess(currentPage)
+                            val repositores = response.data.items.map(RepositoryModel::toRepository)
+
+                            callback.onPageSuccess(currentPage, repositores.size)
                             LoadResult.Page(
-                                data = response.data.items.map(RepositoryModel::toRepository),
+                                data = repositores,
                                 prevKey = if (currentPage <= 1) null else currentPage.minus(1),
                                 nextKey = if (currentPage < maxPages) currentPage.plus(1) else null
                             )
@@ -78,24 +79,6 @@ class GithubRepoPageSource @Inject constructor(
             return LoadResult.Error(exception)
         }
     }
-
-    private fun getEndOfListRepository(msg: String) =
-        Repository(
-            id = -1,
-            ownerAvatar = "",
-            ownerName = "",
-            repositoryName = "",
-            repositoryTitle = "",
-            repositoryDesc = "",
-            repositoryUrl = "",
-
-            language = "",
-            licenseType = "",
-            licenseUrl = "",
-            topics = "",
-
-            endOfListMessage = msg
-        )
 
     companion object {
         const val ITEMS_PER_PAGE = 30

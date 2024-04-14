@@ -25,6 +25,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -38,6 +39,8 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -45,7 +48,6 @@ import com.mendelin.githubrepo.domain.model.Repository
 import com.mendelin.githubrepo.main.item.ListPhoneLandscapeContent
 import com.mendelin.githubrepo.main.item.ListPhonePortraitContent
 import com.mendelin.githubrepo.main.item.ListTabletContent
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,8 +76,6 @@ fun GithubRepoScreen(
     }
 
     var selectedItem by rememberSaveable { mutableStateOf<Repository?>(null) }
-
-    viewModel.setIsTablet(isTablet)
 
     Scaffold(
         snackbarHost = {
@@ -133,14 +133,14 @@ fun GithubRepoScreen(
                 }
             }
         },
-        content = {
+        content = { it ->
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it)
                     .padding(horizontal = 16.dp)
             ) {
-                if (text.isNotEmpty()) {
+                if (text.isNotEmpty() && repositories.itemCount > 0) {
                     val orientation = LocalConfiguration.current.orientation
                     val isLandscape = orientation == Configuration.ORIENTATION_LANDSCAPE
 
@@ -148,8 +148,8 @@ fun GithubRepoScreen(
                         ListTabletContent(
                             list = repositories, selectedItem = selectedItem,
                             isLandscape = isLandscape,
-                        ) {
-                            selectedItem = it
+                        ) { repository ->
+                            selectedItem = repository
                         }
                     } else {
                         if (isLandscape) {
@@ -173,11 +173,26 @@ fun GithubRepoScreen(
                     }
                 }
 
-                uiState.errorMessage?.let { msg ->
-                    scope.launch {
-                        snackbarHostState.showSnackbar(msg, duration = SnackbarDuration.Long)
+                uiState.errorMessage?.let {
+                    LaunchedEffect(it) {
+                        snackbarHostState.showSnackbar(it, duration = SnackbarDuration.Short)
+                        viewModel.errorShown()
                     }
-                    viewModel.errorShown()
+                }
+
+                uiState.emptyListMessage?.let {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
+                    ) {
+                        Text(
+                            text = it,
+                            textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
                 }
             }
         }

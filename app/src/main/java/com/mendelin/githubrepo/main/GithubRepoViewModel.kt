@@ -1,8 +1,5 @@
 package com.mendelin.githubrepo.main
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -36,32 +33,27 @@ class GithubRepoViewModel @Inject constructor(
         MutableStateFlow<PagingData<Repository>>(PagingData.empty())
     val repositoriesState = _repositoriesState.asStateFlow()
 
-    private var _isTablet by mutableStateOf(false)
-
-    fun setIsTablet(value: Boolean) {
-        _isTablet = value
-    }
-
     private fun pagingData(query: String): Flow<PagingData<Repository>> =
         Pager(PagingConfig(pageSize = ITEMS_PER_PAGE, enablePlaceholders = true)) {
             GithubRepoPageSource(
                 useCase = useCase,
                 query = query,
-                showEolAsError = _isTablet,
                 callback = object : PageStatusCallback {
                     override fun onPageLoading() {
                         _uiState.update {
                             it.copy(
                                 isLoading = true,
+                                emptyListMessage = null,
                                 errorMessage = null,
                             )
                         }
                     }
 
-                    override fun onPageSuccess(page: Int) {
+                    override fun onPageSuccess(page: Int, items: Int) {
                         _uiState.update {
                             it.copy(
                                 isLoading = false,
+                                emptyListMessage = if (items == 0) "No repositories for '$query' were found. Please use another search query." else null,
                                 errorMessage = null,
                             )
                         }
@@ -71,6 +63,7 @@ class GithubRepoViewModel @Inject constructor(
                         _uiState.update {
                             it.copy(
                                 isLoading = false,
+                                emptyListMessage = null,
                                 errorMessage = message,
                             )
                         }
