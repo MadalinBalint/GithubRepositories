@@ -51,10 +51,9 @@ class GithubRepoPageSourceTest {
         usersPagingSource = GithubRepoPageSource(
             useCase = useCase,
             query = "kotlin",
-            showEolAsError = false,
             callback = object : PageStatusCallback {
                 override fun onPageLoading() {}
-                override fun onPageSuccess(page: Int) {}
+                override fun onPageSuccess(page: Int, items: Int) {}
                 override fun onPageError(message: String) {}
             }
         )

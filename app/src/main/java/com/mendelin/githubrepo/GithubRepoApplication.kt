@@ -10,5 +10,7 @@ class GithubRepoApplication : Application() {
         super.onCreate()
 
         Timber.plant(Timber.DebugTree())
+
+        // TODO - Add support for Firebase Crashlytics
     }
 }

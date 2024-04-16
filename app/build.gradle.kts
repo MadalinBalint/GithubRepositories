@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.Packaging
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -77,7 +79,7 @@ android {
     }
 
     testOptions {
-        packagingOptions {
+        packaging {
             jniLibs {
                 useLegacyPackaging = true
             }
