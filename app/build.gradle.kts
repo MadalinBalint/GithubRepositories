@@ -70,7 +70,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11"
+        kotlinCompilerExtensionVersion = "1.5.13"
     }
     packaging {
         resources {
@@ -108,9 +108,9 @@ dependencies {
     implementation(libs.androidx.junit.ktx)
     implementation(libs.androidx.runner)
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
-    implementation("androidx.compose.material:material-icons-extended-android:1.6.6")
-    implementation("androidx.compose.material:material-icons-extended:1.6.6")
-    implementation("androidx.paging:paging-compose:3.3.0-beta01")
+    implementation("androidx.compose.material:material-icons-extended-android:1.6.7")
+    implementation("androidx.compose.material:material-icons-extended:1.6.7")
+    implementation("androidx.paging:paging-compose:3.3.0-rc01")
     implementation("androidx.compose.material3:material3-window-size-class-android:1.2.1")
 
     testImplementation(libs.junit)
@@ -124,7 +124,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
-    androidTestImplementation("androidx.compose.ui:ui-test:1.6.6")
+    androidTestImplementation("androidx.compose.ui:ui-test:1.6.7")
     androidTestImplementation("com.google.truth:truth:1.4.2")
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.51.1")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
